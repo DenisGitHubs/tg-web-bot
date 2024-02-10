@@ -12,7 +12,7 @@ export const Form = () => {
       text: "отправить данные",
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [tg]);
   useEffect(() => {
     if (!street || !country) {
       tg.MainButton.hide();
