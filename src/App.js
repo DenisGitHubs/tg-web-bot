@@ -6,7 +6,7 @@ function App() {
 
   useEffect(() => {
     tg.ready();
-  }, []);
+  }, [tg]);
   return (
     <div className="App">
       <button obClick={onToggleButton}>toggle</button>
