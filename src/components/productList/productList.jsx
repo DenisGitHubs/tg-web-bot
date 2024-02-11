@@ -77,10 +77,7 @@ export const ProductList = () => {
                 <img className="footer" src="/img/profile.png" alt='Профиль'></img>
                 <p>Профиль</p>
             </div>
-        
-
       </div>
       </>
     )
 }
-{/* <a target="_blank" href="https://icons8.com/icon/YN6NiwWmtno2/указательный-указательный-на-зрителя-смайлик-светлый-кожи">указательный-указательный-на-зрителя-смайлик-светлый-кожи</a> иконка от <a target="_blank" href="https://icons8.com">Icons8</a> */}
