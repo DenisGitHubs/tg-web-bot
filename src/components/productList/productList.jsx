@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./productList.css";
 import { ProductItem } from "../productItem/productItem";
 import { useTelegram } from "../../hooks/useTelegram";
+import './productList.css'
 const products = [
     {
         id: "1",
