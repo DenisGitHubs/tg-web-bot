@@ -11,7 +11,6 @@ export const Form = () => {
     tg.MainButton.setParams({
       text: "отправить данные",
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tg]);
   useEffect(() => {
     if (!street || !country) {
