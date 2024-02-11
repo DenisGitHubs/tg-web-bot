@@ -56,6 +56,7 @@ export const ProductList = () => {
         }
     }
     return (
+        <>
         <div>
             <div className="list">
                 {products.map((item) => (
@@ -67,5 +68,11 @@ export const ProductList = () => {
                 ))}
             </div>
         </div>
+        <div class="wrapper">
+        <img className="footer" src="/img/tarelka.png"></img>
+        <img className="footer" src="/img/profile.png"></img>
+      </div>
+      </>
     )
 }
+{/* <a target="_blank" href="https://icons8.com/icon/YN6NiwWmtno2/указательный-указательный-на-зрителя-смайлик-светлый-кожи">указательный-указательный-на-зрителя-смайлик-светлый-кожи</a> иконка от <a target="_blank" href="https://icons8.com">Icons8</a> */}
