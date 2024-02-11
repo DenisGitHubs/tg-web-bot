@@ -69,8 +69,16 @@ export const ProductList = () => {
             </div>
         </div>
         <div class="wrapper">
-        <img className="footer" src="/img/tarelka.png"></img>
-        <img className="footer" src="/img/profile.png"></img>
+            <div className="footer-container">
+                <img className="footer" src="/img/tarelka.png"></img>
+                <p>Корзина</p>
+            </div>
+            <div className="footer-container">
+                <img className="footer" src="/img/profile.png"></img>
+                <p>Профиль</p>
+            </div>
+        
+
       </div>
       </>
     )
