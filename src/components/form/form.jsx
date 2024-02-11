@@ -14,13 +14,13 @@ export const Form = () => {
       subject,
     };
     tg.sendData(JSON.stringify(data));
-  }, []);
+  }, [tg, country, street, subject]);
   useEffect(() => {
     tg.onEvent("mainButtonClicked", onSendData);
     return () => {
       tg.offEvent("mainButtonClicked", onSendData);
     };
-  }, [tg]);
+  }, [tg, onSendData]);
 
   useEffect(() => {
     tg.MainButton.setParams({
