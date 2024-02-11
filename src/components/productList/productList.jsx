@@ -68,7 +68,8 @@ export const ProductList = () => {
                 ))}
             </div>
         </div>
-        <div class="wrapper">
+        <footer className="footer-container">
+            <div class="wrapper">
             <div className="footer-container">
                 <img className="footer" src="/img/tarelka.png" alt='Корзина'></img>
                 <p>Корзина</p>
@@ -77,7 +78,9 @@ export const ProductList = () => {
                 <img className="footer" src="/img/profile.png" alt='Профиль'></img>
                 <p>Профиль</p>
             </div>
-      </div>
+            </div>
+        </footer>
+
       </>
     )
 }

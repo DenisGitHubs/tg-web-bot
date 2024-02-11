@@ -10,6 +10,7 @@
 }
 
   .wrapper {
+
     display: flex;
     height: 100%;
     align-items: center;
@@ -20,4 +21,8 @@
   .footer {
     height: 50px;
     width: 50px;
+  }
+  .footer-container{
+    position: sticky;
+    bottom: 0;
   }
