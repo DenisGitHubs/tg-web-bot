@@ -34,6 +34,6 @@ export const ProductItem = ({ product, className, onAdd }) => {
         </div>
             <span>Стоимость: <b>{product.price}</b></span>
         </div>
-        <Button className="add-btn" onClick={onAddHandler}>Добавить в корзину</Button>
+        <Button className="add-btn" onClick={onAddHandler}>Добавить на тарелку</Button>
     </div>;
 };

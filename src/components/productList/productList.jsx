@@ -72,7 +72,7 @@ export const ProductList = () => {
             <div class="wrapper">
             <div className="footer-container">
                 <img className="footer" src="/img/tarelka.png" alt='Корзина'></img>
-                <p>Корзина</p>
+                <p>Тарелка</p>
             </div>
             <div className="footer-container">
                 <img className="footer" src="/img/profile.png" alt='Профиль'></img>
