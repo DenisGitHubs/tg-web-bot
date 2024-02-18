@@ -1,7 +1,7 @@
 export const Cart = () => {
     return (
         <div className="container">
-            <img src='/img/profile.png' alt="cart">3</img>
+            <img src='/img/profile.png' alt="cart"></img>
             <h3 className="title">Тарелка</h3>
             <div className="list-container">
                 <ul className="list"></ul>
