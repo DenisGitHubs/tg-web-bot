@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.price-container {
+    display: flex; 
+    flex-direction: column;
+}
+
+.user-data {
+    display: flex; 
+    flex-direction: column;
+}
+.img-title {
+    width: 100px;
+    height: 100px;
+}
+.accord {
+    width: 100px;
+}

@@ -1,7 +1,8 @@
+import './cart.css'
 export const Cart = () => {
     return (
         <div className="container">
-            <img src='/img/profile.png' alt="cart"></img>
+            <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
             <h3 className="title">Тарелка</h3>
             <div className="list-container">
                 <ul className="list"></ul>
@@ -12,9 +13,9 @@ export const Cart = () => {
                 <input type="text" placeholder="Адрес" />
             </div>
             <div className="price-container">
-                <p className="price-postal">10</p>
-                <p className="price-food">20</p>
-                <p className="price-total">30</p>
+                <p className="price-postal">Стоимость доставки: 10</p>
+                <p className="price-food">Стоимость тарелки: 20</p>
+                <p className="price-total">Общая стоимость: 30</p>
             </div>
             <button className="accord">Соглы</button>
         </div>
