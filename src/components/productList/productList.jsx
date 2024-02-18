@@ -4,6 +4,7 @@ import { ProductItem } from "../productItem/productItem"
 import { useTelegram } from "../../hooks/useTelegram"
 import "./productList.css"
 import { products } from "./productData"
+import { useNavigate } from "react-router-dom"
 const getTotalPrice = (items) => {
     return items.reduce((acc, item) => {
         return (acc += item.price)
@@ -11,6 +12,7 @@ const getTotalPrice = (items) => {
 }
 
 export const ProductList = () => {
+    const navigate = useNavigate()
     const [addItems, setAddItems] = useState([])
     const { tg, queryId } = useTelegram()
 
@@ -55,6 +57,9 @@ export const ProductList = () => {
             })
         }
     }
+    const goToCart = () => {
+        navigate('/cart')
+    }
     return (
         <>
         <div>
@@ -71,7 +76,7 @@ export const ProductList = () => {
         <footer className="footer-container">
             <div class="wrapper">
             <div className="footer-container">
-                <img className="footer" src="/img/tarelka.png" alt='Корзина'></img>
+                <img className="footer" src="/img/tarelka.png" alt='Корзина' onClick={goToCart}></img>
                 <p>Тарелка</p>
             </div>
             <div className="footer-container">
