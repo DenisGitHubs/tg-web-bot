@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom"
 export const ProductList = ({addItems, setAddItems}) => {
     const navigate = useNavigate()
     const { user } = useTelegram();
-    console.log(user?.photo_url);
     // const { tg, queryId } = useTelegram()
     // const onSendData = useCallback(() => {
     //     const data = {
@@ -137,7 +136,7 @@ export const ProductList = ({addItems, setAddItems}) => {
                 <p onClick={goToCart}>Тарелка</p>
             </div>
             <div className="footer-container">
-                <img className="footer" src="/img/profile.png" alt='Профиль'></img>
+                <img className="footer" src={user?.photo_url} alt='Профиль'></img>
                 <p>Профиль</p>
             </div>
             </div>
