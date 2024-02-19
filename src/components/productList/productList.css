@@ -21,8 +21,19 @@
   .footer {
     height: 50px;
     width: 50px;
+    position: relative;
   }
-  .footer-container{
+  .footer-container {
     position: sticky;
     bottom: 0;
+  }
+  .platter-container {
+    
+  }
+  .totalProduct {
+    position: absolute;
+    color: rgb(250, 0, 0);
+    top: 15px;
+    right: 25px;
+    display: flex;
   }
