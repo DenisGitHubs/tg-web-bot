@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { useTelegram } from "./hooks/useTelegram";
 import Header from "./components/header/header";
@@ -8,7 +8,7 @@ import { Form } from "./components/form/form";
 import { Cart } from "./components/cart/cart";
 function App() {
   const { tg } = useTelegram();
-
+  const [addItems, setAddItems] = useState([])
   useEffect(() => {
     tg.ready();
   }, [tg]);
@@ -16,9 +16,9 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route index element={<ProductList />} />
+        <Route index element={<ProductList addItems={addItems} setAddItems={setAddItems} />} />
         <Route path={"form"} element={<Form />} />
-        <Route path={"cart"} element={<Cart />} />
+        <Route path={"cart"} element={<Cart addItems={addItems} setAddItems={setAddItems} />} />
       </Routes>
     </div>
   );

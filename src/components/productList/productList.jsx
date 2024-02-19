@@ -1,4 +1,3 @@
-import React, { useState } from "react"
 import "./productList.css"
 import { ProductItem } from "../productItem/productItem"
 // import { useTelegram } from "../../hooks/useTelegram"
@@ -10,9 +9,9 @@ import { useNavigate } from "react-router-dom"
 //     }, 0)
 // }
 
-export const ProductList = () => {
+export const ProductList = ({addItems, setAddItems}) => {
     const navigate = useNavigate()
-    const [addItems, setAddItems] = useState([])
+
     // const { tg, queryId } = useTelegram()
     // const onSendData = useCallback(() => {
     //     const data = {
@@ -132,7 +131,7 @@ export const ProductList = () => {
             <div className="footer-container">
                 <div className="platter-container">
                     <img className="footer" src="/img/tarelka.png" alt='Корзина' onClick={goToCart}></img>
-                    <p className="totalProduct">{!!addItems.length ? addItems.length : null}</p>
+                    <p className="totalProduct" onClick={goToCart}>{!!addItems.length ? addItems.length : null}</p>
                 </div>
                 <p onClick={goToCart}>Тарелка</p>
             </div>

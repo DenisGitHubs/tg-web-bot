@@ -28,12 +28,11 @@
     bottom: 0;
   }
   .platter-container {
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .totalProduct {
     position: absolute;
     color: rgb(250, 0, 0);
-    top: 15px;
-    right: 25px;
-    display: flex;
   }
