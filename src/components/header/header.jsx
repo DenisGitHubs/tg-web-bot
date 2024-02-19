@@ -9,7 +9,7 @@ const Header = () => {
     <div className={"header"}>
       
       <Button onClick={onClose}>Закрыть</Button>
-      <p>{user?.photo_url}</p>
+      <img src='https://api.telegram.org/file/bot6650967530:AAGjB-DdsW0psfHoyDpm-jtlrluonDZBlfA/AgACAgIAAxUAAWXTXaSez0bNfTkM4Q8uUihejKwRAAKppzEbkWcVIQ0yMEuzcZU7AQADAgADYwADNAQ'></img>
       <span className={"username"}>{user?.username}</span>
     </div>
   );
