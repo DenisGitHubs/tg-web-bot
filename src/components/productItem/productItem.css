@@ -68,6 +68,6 @@
 .quantity_inner .bt_plus:hover svg {
     stroke: #000;
 }
-.quality {
+.quantity {
     color: var(--tg-theme-text-color);
 }
