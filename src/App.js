@@ -5,7 +5,7 @@ import Header from "./components/header/header";
 import { Route, Routes } from "react-router-dom";
 import { ProductList } from "./components/productList/productList";
 import { Form } from "./components/form/form";
-import { Cart } from "./components/cart/cart";
+import { Cart } from "./pages/cart/cart";
 function App() {
   const { tg } = useTelegram();
   const [addItems, setAddItems] = useState([])

@@ -1,6 +1,6 @@
 import "./productList.css"
 import { ProductItem } from "../productItem/productItem"
-// import { useTelegram } from "../../hooks/useTelegram"
+import { useTelegram } from "../../hooks/useTelegram"
 import { products } from "./productData"
 import { useNavigate } from "react-router-dom"
 // const getTotalPrice = (items) => {
@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom"
 
 export const ProductList = ({addItems, setAddItems}) => {
     const navigate = useNavigate()
-
+    const { user } = useTelegram();
+    console.log(user?.photo_url);
     // const { tg, queryId } = useTelegram()
     // const onSendData = useCallback(() => {
     //     const data = {

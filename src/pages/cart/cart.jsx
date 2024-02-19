@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { addProduct } from '../dataCart/dataCart'
 import './cart.css'
 import { useNavigate } from 'react-router-dom';
 export const Cart = ({addItems, setAddItems}) => {
@@ -26,9 +25,7 @@ export const Cart = ({addItems, setAddItems}) => {
     //     if(totalPriceFood === 0) {setTotalPrice(0)}
     //     else {setTotalPrice(totalPrice + deliveryPrice)}
     // }, [totalPriceFood, totalPrice, deliveryPrice])
-    const addOrder = () => {
-        addProduct()
-    }
+
     const beBack = () => {
         navigate(-1)
     }
@@ -52,7 +49,7 @@ export const Cart = ({addItems, setAddItems}) => {
                 <p className="price-total">Общая стоимость: {totalPrice}</p>
             </div>
             <div className='button-conainer'>
-                <button className="accord" onClick={addOrder}>Соглы</button>
+                <button className="accord" >Соглы</button>
                 <button className="back" onClick={beBack}>Вернуться</button>
             </div>
 
