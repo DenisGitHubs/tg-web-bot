@@ -7,8 +7,9 @@ const Header = () => {
 
   return (
     <div className={"header"}>
-      <p>{user.photo_url}</p>
+      
       <Button onClick={onClose}>Закрыть</Button>
+      <p className={user?.photo_url}>3</p>
       <span className={"username"}>{user?.username}</span>
     </div>
   );
