@@ -1,6 +1,6 @@
 import "./productList.css"
 import { ProductItem } from "../productItem/productItem"
-import { useTelegram } from "../../hooks/useTelegram"
+
 import { products } from "./productData"
 import { useNavigate } from "react-router-dom"
 // const getTotalPrice = (items) => {
@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom"
 
 export const ProductList = ({addItems, setAddItems}) => {
     const navigate = useNavigate()
-    const { user } = useTelegram();
     // const { tg, queryId } = useTelegram()
     // const onSendData = useCallback(() => {
     //     const data = {
@@ -136,7 +135,7 @@ export const ProductList = ({addItems, setAddItems}) => {
                 <p onClick={goToCart}>Тарелка</p>
             </div>
             <div className="footer-container">
-                <img className="footer" src={user?.photo_url} alt='Профиль'></img>
+                <img className="footer" src="/img/profile.png" alt='Профиль'></img>
                 <p>Профиль</p>
             </div>
             </div>
