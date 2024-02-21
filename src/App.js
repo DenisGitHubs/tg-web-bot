@@ -10,6 +10,7 @@ function App() {
   const { tg } = useTelegram();
   const [addItems, setAddItems] = useState([])
   useEffect(() => {
+    tg.expand() // растягиваем на все площадь
     tg.ready();
   }, [tg]);
   return (
