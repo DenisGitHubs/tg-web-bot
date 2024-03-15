@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import './cart.css'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
     const [totalPriceFood, setTotalPriceFood] = useState(0);
-    const [deliveryPrice, setDeliveryPrice] = useState(10);
+    const [deliveryPrice, setDeliveryPrice] = useState(null);
+    const [cost, setCost] = useState(null);
     const [totalPrice, setTotalPrice] = useState(totalPriceFood + deliveryPrice);
     const navigate = useNavigate();
     useEffect(() => {  
@@ -17,39 +20,65 @@ export const Cart = ({addItems, setAddItems}) => {
             setTotalPrice(totalPriceFood + deliveryPrice)
         } else {
             setTotalPriceFood(0)
-            setDeliveryPrice(10) // потом удалить
+
             setTotalPrice(totalPriceFood + deliveryPrice)
         }
     }, [addItems, totalPriceFood, deliveryPrice])
-    // useEffect(() => {
-    //     if(totalPriceFood === 0) {setTotalPrice(0)}
-    //     else {setTotalPrice(totalPrice + deliveryPrice)}
-    // }, [totalPriceFood, totalPrice, deliveryPrice])
+    const forward = () => {
+        if (deliveryPrice && totalPrice > 0) {
+            alert('заказано')
+        } else if (deliveryPrice === null) {
+            alert('укажите место доставки')
+        } else { alert('выбери блюда, дорогой')}
+
+    }
 
     const beBack = () => {
         navigate(-1)
     }
+
+
+
+    const getDeliveryPrice = () => {
+        axios.post('/request-delivery-cost')
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    };
+
     return (
         <div className="container">
             <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
             <h3 className="title">Тарелка</h3>
             <div className="list-container">
-                <ul className="list-products">{!!addItems.length ? addItems.map((item) => {
-                    return <li key={item.id}>Блюдо: <b>{item.title}</b> количество: <b>{item.count}</b></li>
-                }) : null}</ul>
+                <ul className="list-products">{!!addItems.length ? <CartItems addItems={addItems} setAddItems={setAddItems}/> : null}</ul>
             </div>
             <div className="user-data-container">
                 <input type="text" className='user-data' placeholder="Имя" />
                 <input type="text" className='user-data' placeholder="Фамилия" />
-                <input type="text" className='user-data' placeholder="Адрес" />
+                {/* <input type="text" className='user-data' placeholder="Адрес" /> */}
             </div>
             <div className="price-container">
-                <p className="price-postal">Стоимость доставки: {deliveryPrice}</p>
-                <p className="price-food">Стоимость тарелки: {totalPriceFood}</p>
-                <p className="price-total">Общая стоимость: {totalPrice}</p>
+                <div className='delivery-wrapper'>
+                {deliveryPrice ? null : <button className='bt_calculate_delivery' onClick={getDeliveryPrice}>рассчитать доставку</button>}
+                </div>
+                <div className='price-wrapper'>
+                <p className="price-postal">Стоимость доставки: </p> 
+                {deliveryPrice ? <p className='number-price'>{deliveryPrice}</p> : null}
+                </div>
+                <div className='price-wrapper'>
+                <p className="price-food">Стоимость тарелки: </p><p className='number-price'>{totalPriceFood}</p>
+                </div>
+                <div className='price-wrapper'>
+                <p className="price-total">Общая стоимость: </p><p className='number-price'>{totalPrice}</p>
+                </div>
+
             </div>
-            <div className='button-conainer'>
-                <button className="accord" >Соглы</button>
+            <div className='button-container'>
+                <button className="accord" onClick={forward}>Подтверждаю</button>
                 <button className="back" onClick={beBack}>Вернуться</button>
             </div>
 

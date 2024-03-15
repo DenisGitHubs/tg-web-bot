@@ -1,17 +1,23 @@
 .container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-left: 10px;
 }
 .price-container {
     display: flex; 
     flex-direction: column;
 }
+.price-wrapper {
+    display: inline-flex;
+    justify-content: space-between;
 
+}
 .user-data-container {
     display: flex; 
     row-gap: 5px;
     flex-direction: column;
+    margin-bottom: 5px;
 }
 .img-title {
     width: 100px;
@@ -23,10 +29,25 @@
 .back {
     width: 100px;
 }
+.bt_calculate_delivery {
+    width: 100px;
+}
 .list-container {
     display: flex;
     flex-direction: column;
 }
 .user-data {
     width: 200px;
+}
+.button-container {
+    display: inline-flex;
+    gap: 5px;
+}
+.delivery-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.number-price {
+    margin-left: 20px;
 }

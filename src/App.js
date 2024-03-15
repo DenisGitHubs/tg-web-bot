@@ -11,7 +11,7 @@ function App() {
   const [addItems, setAddItems] = useState([])
   useEffect(() => {
     tg.expand() // растягиваем на все площадь
-    tg.ready();
+    tg.ready(); // команда на готовность бота к запуску.
   }, [tg]);
   return (
     <div className="App">
