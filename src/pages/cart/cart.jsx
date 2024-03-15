@@ -20,7 +20,7 @@ export const Cart = ({addItems, setAddItems}) => {
             setTotalPrice(totalPriceFood + deliveryPrice)
         } else {
             setTotalPriceFood(0)
-
+            setDeliveryPrice(null)
             setTotalPrice(totalPriceFood + deliveryPrice)
         }
     }, [addItems, totalPriceFood, deliveryPrice])
@@ -42,7 +42,7 @@ export const Cart = ({addItems, setAddItems}) => {
     const getDeliveryPrice = () => {
         axios.post('/request-delivery-cost')
         .then(response => {
-          console.log(response.data);
+          setCost(response.data);
         })
         .catch(error => {
           console.error(error);
@@ -53,6 +53,7 @@ export const Cart = ({addItems, setAddItems}) => {
         <div className="container">
             <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
             <h3 className="title">Тарелка</h3>
+            {cost ? <p>{cost}</p> : null}
             <div className="list-container">
                 <ul className="list-products">{!!addItems.length ? <CartItems addItems={addItems} setAddItems={setAddItems}/> : null}</ul>
             </div>
