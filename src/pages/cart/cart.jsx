@@ -39,16 +39,16 @@ export const Cart = ({addItems, setAddItems}) => {
 
 
 
-    const getDeliveryPrice = () => {
-        axios.post('/request-delivery-cost')
-        .then(response => {
-          setCost(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    };
-
+    function getDeliveryPrice() {
+        fetch('/request-geolocation')
+          .then(response => response.json())
+          .then(data => console.log(data));
+      }
+    //   function getDeliveryCost() {
+    //     fetch('/get-delivery-cost')
+    //       .then(response => response.json())
+    //       .then(data => console.log(data));
+    //   }
     return (
         <div className="container">
             <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
