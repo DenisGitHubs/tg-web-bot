@@ -39,10 +39,16 @@ export const Cart = ({addItems, setAddItems}) => {
 
 
 
+    // function getDeliveryPrice() {
+    //     fetch('/request-geolocation')
+    //       .then(response => response.json())
+    //       .then(data => setCost(data));
+    //   }
     function getDeliveryPrice() {
-        fetch('/request-geolocation')
+        fetch('http://localhost:8000/request-geolocation')
           .then(response => response.json())
-          .then(data => setCost(data));
+          .then(data => console.log(data));
+          setCost(1)
       }
     //   function getDeliveryCost() {
     //     fetch('/get-delivery-cost')
