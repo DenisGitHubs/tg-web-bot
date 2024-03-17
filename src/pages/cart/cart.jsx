@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './cart.css'
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
@@ -35,39 +35,34 @@ export const Cart = ({addItems, setAddItems}) => {
     const beBack = () => {
         navigate(-1)
     }
-
-    useEffect(() => {
-        const fetchLocation = async () => {
-          try {
-            const response = await axios.get('http://localhost:8000/location');
-            setLocation(response.data);
-          } catch (error) {
-            console.error('Error fetching location:', error);
-          }
-        };
-    
-        const intervalId = setInterval(fetchLocation, 5000); // Опрашивать сервер каждые 5 секунд
-    
-        return () => clearInterval(intervalId); // Очистить интервал при размонтировании компонента
-      }, []);
-  
     const [location, setLocation] = useState(null);
+    const [error, setError] = useState(null);
 
-    const handleRequestLocation = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/requestLocation');
-        console.log(response);
-        // Обработать ответ от сервера, если необходимо
-      } catch (error) {
-        console.error('Error requesting location:', error);
+    const handleRequestLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setLocation({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+              setError(null);
+            },
+            (error) => {
+              setError(error.message);
+            },
+          );
+        } else {
+          setError('Geolocation is not supported by this browser.');
+        }
       }
-    };
 
 
     return (
         <div className="container">
             <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
             <h3 className="title">Тарелка</h3>
+            {error ? {error} : null}
             {location ? <p>{location.latitude}</p> : null}
             {location ? <p>{location.longitude}</p> : null}
             <div className="list-container">
