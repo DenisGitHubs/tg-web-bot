@@ -87,7 +87,7 @@ export const Cart = ({addItems, setAddItems}) => {
         if(location)  {
             const BASE_URL = 'https://api.openrouteservice.org/v2/directions/driving-car';
               const proxyUrl = 'http://localhost:8000';
-              const start = '41.643775, 41.643663';
+              const start = '12.310756, 109.187023';
             //   const end = '12.289897, 109.206439';
 
               const body = {
