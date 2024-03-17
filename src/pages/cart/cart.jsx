@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import './cart.css'
-// import axios from 'axios';
+import axios from 'axios';
+// import jsonp from 'axios-jsonp';
 import { useNavigate } from 'react-router-dom';
 import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
     const [totalPriceFood, setTotalPriceFood] = useState(0);
     const [deliveryPrice, setDeliveryPrice] = useState(null);
+    const [distance, setDistance] = useState(null);
     const [totalPrice, setTotalPrice] = useState(totalPriceFood + deliveryPrice);
+    const [location, setLocation] = useState(null);
+    const [error, setError] = useState(null);
+    const API_KEY = '5b3ce3597851110001cf6248e68a623380e04461ae2f0d146dde5cb5';
     const navigate = useNavigate();
     useEffect(() => {  
         if (addItems.length > 0) {
@@ -19,7 +24,6 @@ export const Cart = ({addItems, setAddItems}) => {
             setTotalPrice(totalPriceFood + deliveryPrice)
         } else {
             setTotalPriceFood(0)
-            setDeliveryPrice(null)
             setTotalPrice(totalPriceFood + deliveryPrice)
         }
     }, [addItems, totalPriceFood, deliveryPrice])
@@ -35,14 +39,13 @@ export const Cart = ({addItems, setAddItems}) => {
     const beBack = () => {
         navigate(-1)
     }
-    const [location, setLocation] = useState(null);
-    const [error, setError] = useState(null);
 
-    const handleRequestLocation = () => {
+
+    const handleRequestLocation = async () => {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
+            await navigator.geolocation.getCurrentPosition(
             (position) => {
-              setLocation({
+               setLocation({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
               });
@@ -56,7 +59,35 @@ export const Cart = ({addItems, setAddItems}) => {
           setError('Geolocation is not supported by this browser.');
         }
       }
-
+      useEffect(() => {
+        if(location)  {
+            // const coordinates = [
+            //     '55.751244,37.573856', // Статичная геолокация
+            //     `${location.latitude},${location.longitude}` // Геолокация пользователя
+            //   ];
+            //   const endLoc = '41.622727,41.611893'
+              const apiUrl = 'https://api.openrouteservice.org/v2/directions/driving-car';
+              const proxyUrl = 'http://localhost:8000';
+              const requestUrl = `${apiUrl}?api_key=${API_KEY}&start=41.647102,41.645379&end=${location.latitude},${location.longitude}`;
+              
+              axios.get(requestUrl, {
+                proxy: {
+                  host: proxyUrl, // адрес прокси-сервера
+                  port: 80 // порт прокси-сервера
+                }
+              })
+              .then(response => {
+                console.log(response.data);
+                const newDistance = response.data.features[0].properties.summary.distance / 1000
+                const fixedNumber = parseFloat(newDistance.toFixed(2));
+                setDistance(fixedNumber)
+                setDeliveryPrice(Math.round(distance * 5))
+              })
+              .catch(error => {
+                console.error(error);
+              });
+        }
+      },[location, distance ])
 
     return (
         <div className="container">
@@ -79,13 +110,17 @@ export const Cart = ({addItems, setAddItems}) => {
                 </div>
                 <div className='price-wrapper'>
                 <p className="price-postal">Стоимость доставки: </p> 
-                {deliveryPrice ? <p className='number-price'>{deliveryPrice}</p> : null}
+                {deliveryPrice ? <p className='number-price'>{deliveryPrice} руб</p> : null}
                 </div>
                 <div className='price-wrapper'>
-                <p className="price-food">Стоимость тарелки: </p><p className='number-price'>{totalPriceFood}</p>
+                <p className="price-postal">Дистанция: </p> 
+                {distance ? <p className='number-price'>{distance} км</p> : null}
                 </div>
                 <div className='price-wrapper'>
-                <p className="price-total">Общая стоимость: </p><p className='number-price'>{totalPrice}</p>
+                <p className="price-food">Стоимость тарелки: </p><p className='number-price'>{totalPriceFood} руб</p>
+                </div>
+                <div className='price-wrapper'>
+                <p className="price-total">Общая стоимость: </p><p className='number-price'>{totalPrice} руб</p>
                 </div>
 
             </div>
