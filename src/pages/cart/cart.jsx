@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './cart.css'
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
@@ -42,7 +42,7 @@ export const Cart = ({addItems, setAddItems}) => {
     function getDeliveryPrice() {
         fetch('/request-geolocation')
           .then(response => response.json())
-          .then(data => console.log(data));
+          .then(data => console.log(data), setCost(1));
       }
     //   function getDeliveryCost() {
     //     fetch('/get-delivery-cost')
