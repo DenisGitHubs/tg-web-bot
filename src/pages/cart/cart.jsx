@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './cart.css'
-// import axios from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
@@ -44,22 +44,25 @@ export const Cart = ({addItems, setAddItems}) => {
     //       .then(response => response.json())
     //       .then(data => setCost(data));
     //   }
-    function getDeliveryPrice() {
-        fetch('http://localhost:8000/request-geolocation')
-          .then(response => response.json())
-          .then(data => console.log(data));
-          setCost(1)
+    const [geolocation, setGeolocation] = useState(null);
+
+    const getDeliveryPrice = async () => {
+      try {
+        // Отправьте запрос на ваш локальный сервер, где запущен телеграм бот
+        const response = await axios.get('http://localhost:8000/request-geolocation');
+  
+        // Обработайте ответ от сервера и сохраните геолокацию в состояние компонента
+        setGeolocation(response.data);
+      } catch (error) {
+        console.error('Error requesting geolocation:', error);
       }
-    //   function getDeliveryCost() {
-    //     fetch('/get-delivery-cost')
-    //       .then(response => response.json())
-    //       .then(data => console.log(data));
-    //   }
+    };
     return (
         <div className="container">
             <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
             <h3 className="title">Тарелка</h3>
-            {cost ? <p>{cost}</p> : null}
+            {geolocation ? <p>{geolocation.latitude}</p> : null}
+            {geolocation ? <p>{geolocation.longitude}</p> : null}
             <div className="list-container">
                 <ul className="list-products">{!!addItems.length ? <CartItems addItems={addItems} setAddItems={setAddItems}/> : null}</ul>
             </div>
