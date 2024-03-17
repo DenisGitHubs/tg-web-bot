@@ -42,7 +42,7 @@ export const Cart = ({addItems, setAddItems}) => {
     function getDeliveryPrice() {
         fetch('/request-geolocation')
           .then(response => response.json())
-          .then(data => console.log(data), setCost(1));
+          .then(data => setCost(data));
       }
     //   function getDeliveryCost() {
     //     fetch('/get-delivery-cost')
