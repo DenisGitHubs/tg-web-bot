@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './cart.css'
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
@@ -38,43 +38,34 @@ export const Cart = ({addItems, setAddItems}) => {
 
 
 
-    // function getDeliveryPrice() {
-    //     fetch('/request-geolocation')
-    //       .then(response => response.json())
-    //       .then(data => setCost(data));
-    //   }
     const [geolocation, setGeolocation] = useState(null);
 
     useEffect(() => {
-      const serverUrl = 'http://localhost:8000';
+      const ws = new WebSocket('ws://localhost:8000');
   
-      // Отправьте адрес React-приложения на сервер
-      axios.post(`${serverUrl}/set-react-app-url`, { url: '/api/geolocation' })
-        .then(() => {
-          console.log('React app URL sent to server');
-        })
-        .catch((error) => {
-          console.error('Error sending React app URL to server:', error);
-        });
-    }, []);
-  
-    useEffect(() => {
-      // Создайте обработчик для получения геолокации от сервера
-      const handleGeolocation = (event) => {
-        setGeolocation(event.data);
+      ws.onopen = () => {
+        console.log('WebSocket connection opened');
       };
   
-      window.addEventListener('message', handleGeolocation);
+      ws.onmessage = (event) => {
+        const geolocation = JSON.parse(event.data);
+        setGeolocation(geolocation);
+      };
+  
+      ws.onclose = () => {
+        console.log('WebSocket connection closed');
+      };
   
       return () => {
-        window.removeEventListener('message', handleGeolocation);
+        ws.close();
       };
     }, []);
   
     const requestGeolocation = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/request-geolocation');
-        console.log(response.data);
+        const response = await fetch('http://localhost:8000/request-geolocation');
+        const data = await response.text();
+        console.log(data);
       } catch (error) {
         console.error('Error requesting geolocation:', error);
       }
