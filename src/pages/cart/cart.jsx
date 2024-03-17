@@ -50,6 +50,7 @@ export const Cart = ({addItems, setAddItems}) => {
       ws.onmessage = (event) => {
         const geolocation = JSON.parse(event.data);
         setGeolocation(geolocation);
+        console.log(geolocation);
       };
   
       ws.onclose = () => {
@@ -61,15 +62,18 @@ export const Cart = ({addItems, setAddItems}) => {
       };
     }, []);
   
-    const requestGeolocation = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/request-geolocation');
-        const data = await response.text();
-        console.log(data);
-      } catch (error) {
-        console.error('Error requesting geolocation:', error);
-      }
-    };
+    const requestGeolocation = () => {
+        if (typeof Telegram !== 'undefined' && window.Telegram.WebApp) {
+            window.Telegram.WebApp.getUserLocation((location) => {
+            setGeolocation({
+                latitude: location.latitude,
+                longitude: location.longitude,
+              });
+          });
+        } else {
+          console.error('Telegram Web App API недоступен');
+        }
+      };
     return (
         <div className="container">
             <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
