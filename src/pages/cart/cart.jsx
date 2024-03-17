@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './cart.css'
-// import axios from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
@@ -36,50 +36,40 @@ export const Cart = ({addItems, setAddItems}) => {
         navigate(-1)
     }
 
-
-
-    const [geolocation, setGeolocation] = useState(null);
-
     useEffect(() => {
-      const ws = new WebSocket('ws://localhost:8000');
+        const fetchLocation = async () => {
+          try {
+            const response = await axios.get('http://localhost:8000/location');
+            setLocation(response.data);
+          } catch (error) {
+            console.error('Error fetching location:', error);
+          }
+        };
+    
+        const intervalId = setInterval(fetchLocation, 5000); // Опрашивать сервер каждые 5 секунд
+    
+        return () => clearInterval(intervalId); // Очистить интервал при размонтировании компонента
+      }, []);
   
-      ws.onopen = () => {
-        console.log('WebSocket connection opened');
-      };
-  
-      ws.onmessage = (event) => {
-        const geolocation = JSON.parse(event.data);
-        setGeolocation(geolocation);
-        console.log(geolocation);
-      };
-  
-      ws.onclose = () => {
-        console.log('WebSocket connection closed');
-      };
-  
-      return () => {
-        ws.close();
-      };
-    }, []);
-  
-    const requestGeolocation = () => {
-        if (typeof Telegram !== 'undefined' && window.Telegram.WebApp) {
-            window.Telegram.WebApp.getUserLocation((location) => {
-            setGeolocation({
-                latitude: location.latitude,
-                longitude: location.longitude,
-              });
-          });
-        } else {
-          console.error('Telegram Web App API недоступен');
-        }
-      };
+    const [location, setLocation] = useState(null);
+
+    const handleRequestLocation = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/requestLocation');
+        console.log(response);
+        // Обработать ответ от сервера, если необходимо
+      } catch (error) {
+        console.error('Error requesting location:', error);
+      }
+    };
+
+
     return (
         <div className="container">
             <img className='img-title' src='/img/tarelka.png' alt="cart"></img>
             <h3 className="title">Тарелка</h3>
-            {geolocation ? <p>{geolocation.latitude}</p> : null}
-            {geolocation ? <p>{geolocation.longitude}</p> : null}
+            {location ? <p>{location.latitude}</p> : null}
+            {location ? <p>{location.longitude}</p> : null}
             <div className="list-container">
                 <ul className="list-products">{!!addItems.length ? <CartItems addItems={addItems} setAddItems={setAddItems}/> : null}</ul>
             </div>
@@ -90,7 +80,7 @@ export const Cart = ({addItems, setAddItems}) => {
             </div>
             <div className="price-container">
                 <div className='delivery-wrapper'>
-                {deliveryPrice ? null : <button className='bt_calculate_delivery' onClick={requestGeolocation}>рассчитать доставку</button>}
+                {deliveryPrice ? null : <button className='bt_calculate_delivery' onClick={handleRequestLocation} >рассчитать доставку</button>}
                 </div>
                 <div className='price-wrapper'>
                 <p className="price-postal">Стоимость доставки: </p> 
