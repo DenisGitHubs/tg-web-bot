@@ -45,13 +45,36 @@ export const Cart = ({addItems, setAddItems}) => {
     //   }
     const [geolocation, setGeolocation] = useState(null);
 
-    const getDeliveryPrice = async () => {
-      try {
-        // Отправьте запрос на ваш локальный сервер, где запущен телеграм бот
-        const response = await axios.get('http://localhost:8000/request-geolocation');
+    useEffect(() => {
+      const serverUrl = 'http://localhost:8000';
   
-        // Обработайте ответ от сервера и сохраните геолокацию в состояние компонента
-        setGeolocation(response.data);
+      // Отправьте адрес React-приложения на сервер
+      axios.post(`${serverUrl}/set-react-app-url`, { url: '/api/geolocation' })
+        .then(() => {
+          console.log('React app URL sent to server');
+        })
+        .catch((error) => {
+          console.error('Error sending React app URL to server:', error);
+        });
+    }, []);
+  
+    useEffect(() => {
+      // Создайте обработчик для получения геолокации от сервера
+      const handleGeolocation = (event) => {
+        setGeolocation(event.data);
+      };
+  
+      window.addEventListener('message', handleGeolocation);
+  
+      return () => {
+        window.removeEventListener('message', handleGeolocation);
+      };
+    }, []);
+  
+    const requestGeolocation = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/request-geolocation');
+        console.log(response.data);
       } catch (error) {
         console.error('Error requesting geolocation:', error);
       }
@@ -72,7 +95,7 @@ export const Cart = ({addItems, setAddItems}) => {
             </div>
             <div className="price-container">
                 <div className='delivery-wrapper'>
-                {deliveryPrice ? null : <button className='bt_calculate_delivery' onClick={getDeliveryPrice}>рассчитать доставку</button>}
+                {deliveryPrice ? null : <button className='bt_calculate_delivery' onClick={requestGeolocation}>рассчитать доставку</button>}
                 </div>
                 <div className='price-wrapper'>
                 <p className="price-postal">Стоимость доставки: </p> 
