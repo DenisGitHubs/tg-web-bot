@@ -11,7 +11,7 @@ export const Cart = ({addItems, setAddItems}) => {
     const [totalPrice, setTotalPrice] = useState(totalPriceFood + deliveryPrice);
     const [location, setLocation] = useState(null);
     const [error, setError] = useState(null);
-    const API_KEY = '5b3ce3597851110001cf6248e68a623380e04461ae2f0d146dde5cb5';
+    // const API_KEY = '5b3ce3597851110001cf6248e68a623380e04461ae2f0d146dde5cb5';
     const navigate = useNavigate();
     useEffect(() => {  
         if (addItems.length > 0) {
@@ -59,33 +59,72 @@ export const Cart = ({addItems, setAddItems}) => {
           setError('Geolocation is not supported by this browser.');
         }
       }
-      useEffect(() => {
-        if(location)  {
-            // const coordinates = [
-            //     '55.751244,37.573856', // Статичная геолокация
-            //     `${location.latitude},${location.longitude}` // Геолокация пользователя
-            //   ];
-            //   const endLoc = '41.622727,41.611893'
-              const apiUrl = 'https://api.openrouteservice.org/v2/directions/driving-car';
-              const proxyUrl = 'http://localhost:8000';
-              const requestUrl = `${apiUrl}?api_key=${API_KEY}&start=41.647102,41.645379&end=${location.latitude},${location.longitude}`;
+    //   useEffect(() => {
+    //     if(location)  {
+    //           const apiUrl = 'https://api.openrouteservice.org/v2/directions/driving-car';
+    //           const proxyUrl = 'http://localhost:8000';
+    //           const requestUrl = `${apiUrl}?api_key=${API_KEY}&start=12.288443,109.203316&end=12.289897,109.206439`;
               
-              axios.get(requestUrl, {
+    //           axios.get(requestUrl, {
+    //             proxy: {
+    //               host: proxyUrl, // адрес прокси-сервера
+    //               port: 80 // порт прокси-сервера
+    //             }
+    //           })
+    //           .then(response => {
+    //             console.log(response.data);
+    //             const newDistance = response.data.features[0].properties.summary.distance / 1000
+    //             const fixedNumber = parseFloat(newDistance.toFixed(2));
+    //             setDistance(fixedNumber)
+    //             setDeliveryPrice(Math.round(distance * 5))
+    //           })
+    //           .catch(error => {
+    //             console.error(error);
+    //           });
+    //     }
+    //   },[location, distance ])
+    useEffect(() => {
+        if(location)  {
+            const BASE_URL = 'https://api.openrouteservice.org/v2/directions/driving-car';
+              const proxyUrl = 'http://localhost:8000';
+              const start = '41.643775, 41.643663';
+            //   const end = '12.289897, 109.206439';
+
+              const body = {
+                "coordinates": [
+                  [
+                    parseFloat(start.split(',')[1]),
+                    parseFloat(start.split(',')[0])
+                  ],
+                  [
+                    parseFloat(location.longitude),
+                    parseFloat(location.latitude)
+                  ]
+                ]
+              };
+            //   const requestUrl = `${apiUrl}?api_key=${API_KEY}&start=12.288443,109.203316&end=12.289897,109.206439`;
+              const config = {
+                headers: {
+                  'Authorization': `5b3ce3597851110001cf6248e68a623380e04461ae2f0d146dde5cb5`,
+                  'Content-Type': 'application/json'
+                },
                 proxy: {
-                  host: proxyUrl, // адрес прокси-сервера
-                  port: 80 // порт прокси-сервера
+                  host: proxyUrl.split(':')[0],
+                  port: proxyUrl.split(':')[1]
                 }
-              })
-              .then(response => {
-                console.log(response.data);
-                const newDistance = response.data.features[0].properties.summary.distance / 1000
-                const fixedNumber = parseFloat(newDistance.toFixed(2));
-                setDistance(fixedNumber)
-                setDeliveryPrice(Math.round(distance * 5))
-              })
-              .catch(error => {
+              };
+
+              axios.post(BASE_URL, body, config)
+                .then(response => {
+                    console.log(response.data);
+                    const newDistance = response.data.routes[0].summary.distance / 1000
+                    const fixedNumber = parseFloat(newDistance.toFixed(2));
+                    setDistance(fixedNumber)
+                    setDeliveryPrice(Math.round(distance * 5))
+                })
+                .catch(error => {
                 console.error(error);
-              });
+                    });
         }
       },[location, distance ])
 
