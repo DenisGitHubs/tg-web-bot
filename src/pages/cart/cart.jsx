@@ -6,7 +6,6 @@ import { CartItems } from '../../components/cartItems/cartItems';
 export const Cart = ({addItems, setAddItems}) => {
     const [totalPriceFood, setTotalPriceFood] = useState(0);
     const [deliveryPrice, setDeliveryPrice] = useState(null);
-    const [cost, setCost] = useState(null);
     const [totalPrice, setTotalPrice] = useState(totalPriceFood + deliveryPrice);
     const navigate = useNavigate();
     useEffect(() => {  
